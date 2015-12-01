@@ -22,7 +22,7 @@ binutils:
 	test -e $(IBERTY_LIB) || (cd $(IBERTY) && ./configure && make -j 4 LDFLAGS="-all-static" CFLAGS="-fPIC")
 
 lib$(NAME).so: $(NAME).o
-	$(CC) -shared -Wl,-soname,lib$(NAME).so $^ -o $(BUILD_DIR)/lib/lib$(NAME).so $(OPCODES_LIB) $(BFD_LIB) -lz -ldl
+	$(CC) -shared -Wl,-soname,lib$(NAME).so $^ -o $(BUILD_DIR)/lib/lib$(NAME).so $(OPCODES_LIB) $(BFD_LIB) $(IBERTY_LIB) -lz -ldl
 
 clean:
 	$(RM) *.o *.so*
