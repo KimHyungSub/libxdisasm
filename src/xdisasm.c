@@ -271,6 +271,14 @@ int init_dis_env(int arch, int bits, int endian){
             disas = print_insn_i386_intel;
             break;
 
+        case ARCH_xtensa:
+	    if(endian) {
+                fprintf(stderr, "libxdisasm: big endian mode is not supported for xtensa disassembly.\n");
+                return -1;
+	    }
+            disas = print_insn_xtensa; 		// beware!  print_insn_xtensa defaults to little endian
+            break;                              // it doesn't appear possible to override this behavior via
+						// settings in dis (dis->endian etc)
         default:
             fprintf(stderr, "libxdisasm: Invalid architecture\n");
             return -1;

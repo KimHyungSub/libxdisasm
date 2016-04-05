@@ -1,7 +1,7 @@
 libxdisasm
 ==========
 
-libxdisasm is a simple and small library that allows disassembly of raw bytes. It currently supports x86, x86_64, arm, ppc and mips. It is meant to provide a quick way to disassemble a raw chunk of bytes. An example of a tool that uses libxdisasm is [xdisasm](http://github.com/acama/xdisasm).
+libxdisasm is a simple and small library that allows disassembly of raw bytes. It currently supports x86, x86_64, arm, ppc, mips, and the xtensa core ISA in little endian. It is meant to provide a quick way to disassemble a raw chunk of bytes. An example of a tool that uses libxdisasm is [xdisasm](http://github.com/acama/xdisasm).
 
 Build Instructions
 ------------------
@@ -36,8 +36,13 @@ This function returns a linked list of insn_t types which are basically containe
 * __vma__ - This is the address where the raw buffer will be assumed to be loaded in memory
 * __rawbuf__ - This buffer points to the raw bytes that are supposed to be disassembled
 * __buflen__ - This is the length of the data being disassembled
-* __arch__ - One of ARCH__{arm ,x86, powerpc, mips}
+* __arch__ - One of ARCH__{arm ,x86, powerpc, mips, xtensa}
 * __bits__ - 64-bit, 32-bit or 16-bit
 * **endian** - 1 for big endian, 0 for little endian
 
 The _free_all_instrs_() function frees the memory allocated for the insn_list list and the _free_instr()_ frees the memory allocated for one instruction.
+
+
+Notes on Xtensa:
+----------------
+libxdisasm relies on _the print_insn_xtensa()_ function for disassembly.  This function defaults to little endian, and it doesn't appear possible to change this even though xtensa processors are bi-endian.  Note that the printed opcodes are in big-endian format - this behavior is consistent with xisasm's behavior for other architectures.
